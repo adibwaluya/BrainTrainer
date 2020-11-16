@@ -3,6 +3,7 @@ package de.htwberlin.braintrainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,9 +16,32 @@ public class MainActivity extends AppCompatActivity {
     Button goButton;
     TextView sumTextView;
     ArrayList<Integer> answers = new ArrayList<Integer>();      // Hold the potential answers
+    int correctAnswer;
+    TextView resultTextView;
+    int score = 0;
+    int numberOfQuestion = 0;
+    TextView scoreTextView;
 
+    public void chooseAnswer(View view) {
+        if (Integer.toString(correctAnswer).equals(view.getTag().toString())) {
+            // if the location of the correct answer equals as its tag
+            // User got the correct answer
+            resultTextView.setText("Correct!");
+            score++;
+        } else {
+            resultTextView.setText("Wrong!");
+        }
+        numberOfQuestion++;
+
+        // Score text contains score/numberOfQuestion
+        scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestion));
+    }
     public void start(View view) {
         goButton.setVisibility(View.INVISIBLE);
+    }
+
+    public void newQuestion() {
+
     }
 
     @Override
@@ -31,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         Button button1 = findViewById(R.id.button1);
         Button button2 = findViewById(R.id.button2);
         Button button3 = findViewById(R.id.button3);
+        resultTextView = findViewById(R.id.resultTextView);
+        scoreTextView = findViewById(R.id.scoreTextView);
 
         Random rand = new Random();
 
@@ -41,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         sumTextView.setText(Integer.toString(a) + " + " + Integer.toString(b));
 
-        int correctAnswer = rand.nextInt(4);
+        correctAnswer = rand.nextInt(4);
         for (int i = 0; i < 4; i++) {
             if (i == correctAnswer){
                 answers.add(a + b);
