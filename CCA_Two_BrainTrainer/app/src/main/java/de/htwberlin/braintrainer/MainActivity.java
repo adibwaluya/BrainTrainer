@@ -3,6 +3,7 @@ package de.htwberlin.braintrainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,31 @@ public class MainActivity extends AppCompatActivity {
     Button button1;
     Button button2;
     Button button3;
+    TextView timerTextView;
+    Button playAgainButton;
 
+    public void playAgain(View view) {
+        score = 0;
+        numberOfQuestion = 0;
+        timerTextView.setText("30s");
+        scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestion));
+        newQuestion();
+        playAgainButton.setVisibility(View.INVISIBLE);
+
+        new CountDownTimer(30100, 1000) {
+
+            @Override
+            public void onTick(long l) {
+                timerTextView.setText(String.valueOf((l / 1000) + "s"));
+            }
+
+            @Override
+            public void onFinish() {
+                resultTextView.setText("Done!");
+                playAgainButton.setVisibility(View.VISIBLE);
+            }
+        }.start();
+    }
     public void chooseAnswer(View view) {
         if (Integer.toString(correctAnswer).equals(view.getTag().toString())) {
             // if the location of the correct answer equals as its tag
@@ -88,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.button3);
         resultTextView = findViewById(R.id.resultTextView);
         scoreTextView = findViewById(R.id.scoreTextView);
+        timerTextView = findViewById(R.id.timerTextView);
+        playAgainButton = findViewById(R.id.playAgainButton);
 
-        newQuestion();
+        playAgain(findViewById(R.id.playAgainButton));
+
     }
 }
