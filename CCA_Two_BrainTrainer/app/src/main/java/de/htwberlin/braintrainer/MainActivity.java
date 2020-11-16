@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
     int score = 0;
     int numberOfQuestion = 0;
     TextView scoreTextView;
+    Button button0;
+    Button button1;
+    Button button2;
+    Button button3;
 
     public void chooseAnswer(View view) {
         if (Integer.toString(correctAnswer).equals(view.getTag().toString())) {
@@ -35,29 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Score text contains score/numberOfQuestion
         scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestion));
+        newQuestion();
     }
     public void start(View view) {
         goButton.setVisibility(View.INVISIBLE);
     }
 
     public void newQuestion() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        goButton = findViewById(R.id.goButton);
-
-        sumTextView = findViewById(R.id.sumTextView);
-        Button button0 = findViewById(R.id.button0);
-        Button button1 = findViewById(R.id.button1);
-        Button button2 = findViewById(R.id.button2);
-        Button button3 = findViewById(R.id.button3);
-        resultTextView = findViewById(R.id.resultTextView);
-        scoreTextView = findViewById(R.id.scoreTextView);
-
         Random rand = new Random();
 
         // Picking 21 random different numbers
@@ -68,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         sumTextView.setText(Integer.toString(a) + " + " + Integer.toString(b));
 
         correctAnswer = rand.nextInt(4);
+        answers.clear();                                    // Clear the arrays beforehand
         for (int i = 0; i < 4; i++) {
             if (i == correctAnswer){
                 answers.add(a + b);
@@ -84,5 +73,22 @@ public class MainActivity extends AppCompatActivity {
         button1.setText(Integer.toString(answers.get(1)));
         button2.setText(Integer.toString(answers.get(2)));
         button3.setText(Integer.toString(answers.get(3)));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        goButton = findViewById(R.id.goButton);
+        sumTextView = findViewById(R.id.sumTextView);
+        button0 = findViewById(R.id.button0);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+        resultTextView = findViewById(R.id.resultTextView);
+        scoreTextView = findViewById(R.id.scoreTextView);
+
+        newQuestion();
     }
 }
