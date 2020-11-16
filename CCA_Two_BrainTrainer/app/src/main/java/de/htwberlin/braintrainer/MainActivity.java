@@ -1,6 +1,7 @@
 package de.htwberlin.braintrainer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -28,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
     Button button3;
     TextView timerTextView;
     Button playAgainButton;
+    ConstraintLayout gameLayout;
 
     public void playAgain(View view) {
         score = 0;
         numberOfQuestion = 0;
         timerTextView.setText("30s");
         scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestion));
+        resultTextView.setText("Not answered yet");
         newQuestion();
         playAgainButton.setVisibility(View.INVISIBLE);
 
@@ -68,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void start(View view) {
         goButton.setVisibility(View.INVISIBLE);
+        gameLayout.setVisibility(View.VISIBLE);
+        playAgain(findViewById(R.id.playAgainButton));
     }
 
     public void newQuestion() {
@@ -106,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         goButton = findViewById(R.id.goButton);
+        goButton.setVisibility(View.VISIBLE);
+
         sumTextView = findViewById(R.id.sumTextView);
         button0 = findViewById(R.id.button0);
         button1 = findViewById(R.id.button1);
@@ -115,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
         scoreTextView = findViewById(R.id.scoreTextView);
         timerTextView = findViewById(R.id.timerTextView);
         playAgainButton = findViewById(R.id.playAgainButton);
-
-        playAgain(findViewById(R.id.playAgainButton));
+        gameLayout = findViewById(R.id.gameLayout);
+        gameLayout.setVisibility(View.INVISIBLE);
 
     }
 }
